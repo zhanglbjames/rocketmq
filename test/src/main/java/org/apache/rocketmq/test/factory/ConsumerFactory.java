@@ -27,9 +27,9 @@ public class ConsumerFactory {
 
     public static RMQNormalConsumer getRMQNormalConsumer(String nsAddr, String consumerGroup,
         String topic, String subExpression,
-        AbstractListener listner) {
+        AbstractListener listener) {
         RMQNormalConsumer consumer = new RMQNormalConsumer(nsAddr, topic, subExpression,
-            consumerGroup, listner);
+            consumerGroup, listener);
         consumer.create();
         consumer.start();
         return consumer;
@@ -37,9 +37,9 @@ public class ConsumerFactory {
 
     public static RMQBroadCastConsumer getRMQBroadCastConsumer(String nsAddr, String consumerGroup,
         String topic, String subExpression,
-        AbstractListener listner) {
+        AbstractListener listener) {
         RMQBroadCastConsumer consumer = new RMQBroadCastConsumer(nsAddr, topic, subExpression,
-            consumerGroup, listner);
+            consumerGroup, listener);
         consumer.create();
         consumer.start();
         return consumer;
@@ -47,9 +47,9 @@ public class ConsumerFactory {
 
     public static RMQSqlConsumer getRMQSqlConsumer(String nsAddr, String consumerGroup,
         String topic, MessageSelector selector,
-        AbstractListener listner) {
+        AbstractListener listener) {
         RMQSqlConsumer consumer = new RMQSqlConsumer(nsAddr, topic, selector,
-            consumerGroup, listner);
+            consumerGroup, listener);
         consumer.create();
         consumer.start();
         return consumer;

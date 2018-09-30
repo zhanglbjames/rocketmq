@@ -48,6 +48,7 @@ public class RMQAsyncSendProducer extends AbstractMQProducer {
         this.nsAddr = nsAddr;
         sendCallback = new SendCallback() {
             public void onSuccess(org.apache.rocketmq.client.producer.SendResult sendResult) {
+                // 异步发送成功的信息给调用方
                 successSendResult.add(sendResult);
             }
 
@@ -100,6 +101,7 @@ public class RMQAsyncSendProducer extends AbstractMQProducer {
         producer.shutdown();
     }
 
+    // 通过回调完成异步发送消息状态的通知
     public void asyncSend(Object msg) {
         Message metaqMsg = (Message) msg;
         try {

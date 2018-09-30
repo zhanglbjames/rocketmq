@@ -28,10 +28,10 @@ import org.apache.rocketmq.test.util.RandomUtil;
 import org.apache.rocketmq.test.util.data.collect.DataCollector;
 import org.apache.rocketmq.test.util.data.collect.DataCollectorManager;
 
-public class RMQDelayListner extends AbstractListener implements MessageListenerConcurrently {
+public class RMQDelaylistener extends AbstractListener implements MessageListenerConcurrently {
     private DataCollector msgDelayTimes = null;
 
-    public RMQDelayListner() {
+    public RMQDelaylistener() {
         msgDelayTimes = DataCollectorManager.getInstance()
             .fetchDataCollector(RandomUtil.getStringByUUID());
     }
@@ -49,7 +49,7 @@ public class RMQDelayListner extends AbstractListener implements MessageListener
         long recvTime = System.currentTimeMillis();
         for (MessageExt msg : msgs) {
             if (isDebug) {
-                logger.info(listnerName + ":" + msg);
+                logger.info(listenerName + ":" + msg);
             }
 
             msgBodys.addData(new String(msg.getBody()));

@@ -66,6 +66,7 @@ public class Producer {
 
         final LinkedList<Long[]> snapshotList = new LinkedList<Long[]>();
 
+        // 以先进后出的方式将采集的快照放入大小为10的滑动统计窗内
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -76,6 +77,7 @@ public class Producer {
             }
         }, 1000, 1000);
 
+        // 计算滑动统计窗内的数据
         timer.scheduleAtFixedRate(new TimerTask() {
             private void printStats() {
                 if (snapshotList.size() >= 10) {
@@ -117,9 +119,11 @@ public class Producer {
                 @Override
                 public void run() {
                     while (true) {
+                        // 组装消息
                         try {
                             final Message msg;
                             try {
+                                // 指定消息
                                 msg = buildMessage(messageSize, topic);
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
@@ -129,6 +133,8 @@ public class Producer {
                             if (keyEnable) {
                                 msg.setKeys(String.valueOf(beginTimestamp / 1000));
                             }
+
+                            // 填充属性值
                             if (propertySize > 0) {
                                 if (msg.getProperties() != null) {
                                     msg.getProperties().clear();
@@ -149,7 +155,10 @@ public class Producer {
                                     startValue += 2;
                                 }
                             }
+                            // 发送消息
                             producer.send(msg);
+
+                            // 更新统计数据
                             statsBenchmark.getSendRequestSuccessCount().incrementAndGet();
                             statsBenchmark.getReceiveResponseSuccessCount().incrementAndGet();
                             final long currentRT = System.currentTimeMillis() - beginTimestamp;
