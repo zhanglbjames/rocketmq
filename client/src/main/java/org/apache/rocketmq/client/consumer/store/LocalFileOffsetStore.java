@@ -82,6 +82,8 @@ public class LocalFileOffsetStore implements OffsetStore {
                 offsetOld = this.offsetTable.putIfAbsent(mq, new AtomicLong(offset));
             }
 
+            // 为什么要对取出来老的的AtomicLong类型的offset进行设置最新的offset值？ 保持使用到的数据都是最新的数据吗？
+            // 取出来的数据会有很多线程同时更新吗？为什么旧值的更新使用CAS ？
             if (null != offsetOld) {
                 if (increaseOnly) {
                     MixAll.compareAndIncreaseOnly(offsetOld, offset);
@@ -115,6 +117,7 @@ public class LocalFileOffsetStore implements OffsetStore {
                     if (offsetSerializeWrapper != null && offsetSerializeWrapper.getOffsetTable() != null) {
                         AtomicLong offset = offsetSerializeWrapper.getOffsetTable().get(mq);
                         if (offset != null) {
+                            // 从文件存储中取出来并设置到内存中
                             this.updateOffset(mq, offset.get(), false);
                             return offset.get();
                         }

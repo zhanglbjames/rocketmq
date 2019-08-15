@@ -140,6 +140,7 @@ public class RemoteBrokerOffsetStore implements OffsetStore {
             }
         }
 
+        // 没有消费的mq在内存中进行移除
         if (!unusedMQ.isEmpty()) {
             for (MessageQueue mq : unusedMQ) {
                 this.offsetTable.remove(mq);
@@ -248,5 +249,17 @@ public class RemoteBrokerOffsetStore implements OffsetStore {
         } else {
             throw new MQClientException("The broker[" + mq.getBrokerName() + "] not exist", null);
         }
+    }
+
+    private static void test(Object o) {
+        o = new Object();
+        System.out.println(o);
+    }
+    public static void main(String[] args) {
+
+        Object outer = new Object();
+        System.out.println(outer);
+        test(outer);
+        System.out.println(outer);
     }
 }

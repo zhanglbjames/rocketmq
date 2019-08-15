@@ -148,6 +148,14 @@ public class MixAll {
         return Math.abs(value);
     }
 
+
+    /**
+     * 文件操作
+     *
+     * 1. 先创建临时文件，判断原有文件是否有内容,内容不为空则创建其备份文件
+     * 2. 创建完成后再删除原来的临时文件
+     * 3. 让后再将备份和临时的文件重命名, 注意重名名的文件不能存在
+     */
     public static void string2File(final String str, final String fileName) throws IOException {
 
         String tmpFile = fileName + ".tmp";

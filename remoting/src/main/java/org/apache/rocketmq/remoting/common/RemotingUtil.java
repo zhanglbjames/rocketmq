@@ -123,8 +123,10 @@ public class RemotingUtil {
                     return ip;
                 }
 
+                // 没有本地地址，则直接找最后一个地址直接返回，不用判断
                 return ipv4Result.get(ipv4Result.size() - 1);
             } else if (!ipv6Result.isEmpty()) {
+                // ipv6的地址直接返回第一个
                 return ipv6Result.get(0);
             }
             //If failed to find,fall back to localhost
